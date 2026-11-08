@@ -69,6 +69,30 @@ Enter:
 
 The installer updates the scheduled tasks.
 
+### Step 6: Weekend Setup (Friday Off)
+
+Friday is your weekly weekend. Disable the Attendance task on Friday so automatic Check-In does not run.
+
+**Every Friday – Disable Attendance:**
+
+Open PowerShell as Administrator and run:
+
+```powershell
+Disable-ScheduledTask -TaskName "Betopia Home Attendance Agent"
+```
+
+**Every Saturday – Enable Attendance:**
+
+Run:
+
+```powershell
+Enable-ScheduledTask -TaskName "Betopia Home Attendance Agent"
+```
+
+After enabling, the daily scheduled Check-In will resume.
+
+**Important:** Complete the initial installation before using these commands. Do not disable the Backend Auto Start task; only disable the Attendance task.
+
 ### API Documentation
 
 http://127.0.0.1:8000/docs
@@ -77,6 +101,7 @@ http://127.0.0.1:8000/docs
 - Complete ERP login and MFA manually.
 - Keep the PC connected to the internet.
 - Disable the Attendance task on non-WFH days.
+- Friday is the weekly weekend; disable Attendance on Friday and enable it on Saturday.
 - Verify successful Check-In in Betopia ERP.
 - The PC enters Sleep only after successful attendance verification.
 - Never share your ERP credentials or browser profile.

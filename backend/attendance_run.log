@@ -169,3 +169,15 @@
 2026-11-08 21:24:28 - Attendance verified successfully.
 2026-11-08 21:24:28 - Action: checked_in
 2026-11-08 21:24:28 - PC will enter Sleep in 5 seconds.
+2026-11-08 21:36:11 - ========================================
+2026-11-08 21:36:11 - Attendance task started.
+2026-11-08 21:36:11 - Stopping old Backend process...
+2026-11-08 21:36:11 - Stopping process: python, PID: 11524
+2026-11-08 21:36:11 - Old Backend stopped successfully.
+2026-11-08 21:36:11 - Starting fresh Backend...
+2026-11-08 21:36:12 - Fresh Backend is ready.
+2026-11-08 21:36:13 - ERP DNS and HTTPS connection established.
+2026-11-08 21:36:13 - Calling attendance API.
+2026-11-08 21:36:17 - Attendance verified successfully.
+2026-11-08 21:36:17 - Action: checked_in
+2026-11-08 21:36:17 - PC will enter Sleep in 5 seconds.
