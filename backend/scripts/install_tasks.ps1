@@ -5,7 +5,7 @@ $ErrorActionPreference = "Stop"
 # BETOPIA ATTENDANCE INSTALLER
 # ============================================
 
-$ProjectRoot = Split-Path -Parent $PSScriptRoot
+$ProjectRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
 $BackendPath = Join-Path $ProjectRoot "backend"
 
 $SleepScript = Join-Path $BackendPath "run_attendance_and_sleep.ps1"
@@ -258,51 +258,99 @@ Register-XmlTask -Name $AttendanceTaskName -Xml $AttendanceTaskXml
 # START BACKEND IMMEDIATELY
 # ============================================
 
+
+# ============================================
+# RESTART BACKEND IMMEDIATELY
+# ============================================
+
 Write-Host ""
-Write-Host "Starting Betopia Backend..." -ForegroundColor Cyan
+Write-Host "Restarting Betopia Backend..." -ForegroundColor Cyan
 
-$BackendReady = $false
 $OpenApiUrl = "http://127.0.0.1:8000/openapi.json"
+$BackendReady = $false
 
-# Check existing backend first
-try {
-    Invoke-RestMethod -Uri $OpenApiUrl -TimeoutSec 3 | Out-Null
-    $BackendReady = $true
+# STEP 1: Stop existing process on port 8000
 
-    Write-Host "Backend is already running." -ForegroundColor Green
-}
-catch {
-    $BackendReady = $false
-}
+Write-Host "Checking existing Backend process..." -ForegroundColor Yellow
 
-# Start backend task if not running
-if (-not $BackendReady) {
+$OldConnections = @(
+    Get-NetTCPConnection -LocalPort 8000 -State Listen -ErrorAction SilentlyContinue
+)
 
-    Start-ScheduledTask -TaskName $BackendTaskName
+$OldProcessIds = @(
+    $OldConnections |
+    Select-Object -ExpandProperty OwningProcess -Unique
+)
 
-    for ($i = 0; $i -lt 30; $i++) {
+foreach ($ProcessId in $OldProcessIds) {
 
-        Start-Sleep -Seconds 1
+    if ($ProcessId -ne 0) {
 
-        try {
-            Invoke-RestMethod -Uri $OpenApiUrl -TimeoutSec 2 | Out-Null
+        $Process = Get-CimInstance Win32_Process -Filter "ProcessId = $ProcessId"
 
-            $BackendReady = $true
-            break
+        if ($Process -and $Process.Name -eq "python.exe") {
+
+            Write-Host "Stopping old Backend PID: $ProcessId" -ForegroundColor Yellow
+
+            Stop-Process -Id $ProcessId -Force -ErrorAction Stop
         }
-        catch {
-            $BackendReady = $false
+        else {
+            throw "Port 8000 is occupied by another application. Process was not stopped."
         }
     }
 }
 
-if ($BackendReady) {
-    Write-Host "Backend started successfully!" -ForegroundColor Green
+# STEP 2: Wait until port 8000 is free
+
+$PortFree = $false
+
+for ($i = 0; $i -lt 15; $i++) {
+
+    $Listener = Get-NetTCPConnection -LocalPort 8000 -State Listen -ErrorAction SilentlyContinue
+
+    if (-not $Listener) {
+        $PortFree = $true
+        break
+    }
+
+    Start-Sleep -Seconds 1
 }
-else {
-    Write-Warning "Backend did not start within 30 seconds."
-    Write-Warning "Check port 8000 and Task Scheduler."
+
+if (-not $PortFree) {
+    throw "Port 8000 is still occupied. Backend restart aborted."
 }
+
+Write-Host "Old Backend stopped." -ForegroundColor Green
+
+# STEP 3: Start fresh Backend using Scheduled Task
+
+Write-Host "Starting fresh Backend..." -ForegroundColor Cyan
+
+Start-ScheduledTask -TaskName $BackendTaskName
+
+# STEP 4: Verify new Backend
+
+for ($i = 0; $i -lt 30; $i++) {
+
+    Start-Sleep -Seconds 1
+
+    try {
+        Invoke-RestMethod -Uri $OpenApiUrl -TimeoutSec 2 | Out-Null
+
+        $BackendReady = $true
+        break
+    }
+    catch {
+        $BackendReady = $false
+    }
+}
+
+if (-not $BackendReady) {
+    throw "Fresh Backend did not become ready within 30 seconds."
+}
+
+Write-Host "Backend restarted successfully!" -ForegroundColor Green
+
 
 # ============================================
 # INSTALLATION SUMMARY

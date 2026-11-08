@@ -47,3 +47,125 @@
 2026-11-08 15:42:06 - Attendance verified successfully.
 2026-11-08 15:42:06 - Action: checked_in
 2026-11-08 15:42:06 - PC will enter Sleep in 5 seconds.
+2026-11-08 18:44:50 - ========================================
+2026-11-08 18:44:50 - Attendance task started.
+2026-11-08 18:44:50 - Backend is ready.
+2026-11-08 18:44:51 - ERP connection unavailable. Waiting 10 seconds...
+2026-11-08 18:45:01 - ERP DNS and HTTPS connection established.
+2026-11-08 18:45:01 - Calling attendance API.
+2026-11-08 18:45:07 - Attendance verified successfully.
+2026-11-08 18:45:07 - Action: checked_in
+2026-11-08 18:45:07 - PC will enter Sleep in 5 seconds.
+2026-11-08 18:48:20 - ========================================
+2026-11-08 18:48:20 - Attendance task started.
+2026-11-08 18:48:20 - Backend is ready.
+2026-11-08 18:48:20 - ERP connection unavailable. Waiting 10 seconds...
+2026-11-08 18:48:31 - ERP DNS and HTTPS connection established.
+2026-11-08 18:48:31 - Calling attendance API.
+2026-11-08 18:48:31 - ERROR: The remote server returned an error: (400) Bad Request.
+2026-11-08 18:48:31 - PC will remain awake.
+2026-11-08 19:00:51 - ========================================
+2026-11-08 19:00:51 - Attendance task started.
+2026-11-08 19:00:51 - Backend is ready.
+2026-11-08 19:00:51 - ERP DNS and HTTPS connection established.
+2026-11-08 19:00:51 - Calling attendance API.
+2026-11-08 19:00:57 - Attendance verified successfully.
+2026-11-08 19:00:57 - Action: checked_in
+2026-11-08 19:00:57 - PC will enter Sleep in 5 seconds.
+2026-11-08 19:03:53 - ========================================
+2026-11-08 19:03:53 - Attendance task started.
+2026-11-08 19:03:53 - Backend is ready.
+2026-11-08 19:03:54 - ERP connection unavailable. Waiting 10 seconds...
+2026-11-08 19:04:04 - ERP connection unavailable. Waiting 10 seconds...
+2026-11-08 19:04:14 - ERP DNS and HTTPS connection established.
+2026-11-08 19:04:14 - Calling attendance API.
+2026-11-08 19:04:14 - ERROR: The remote server returned an error: (400) Bad Request.
+2026-11-08 19:04:14 - PC will remain awake.
+2026-11-08 19:10:35 - ========================================
+2026-11-08 19:10:35 - Attendance task started.
+2026-11-08 19:10:35 - Stopping old Backend process...
+2026-11-08 19:10:35 - Old Backend stopped successfully.
+2026-11-08 19:10:35 - Starting fresh Backend...
+2026-11-08 19:10:37 - Fresh Backend is ready.
+2026-11-08 19:10:37 - ERP DNS and HTTPS connection established.
+2026-11-08 19:10:37 - Calling attendance API.
+2026-11-08 19:10:42 - Attendance verified successfully.
+2026-11-08 19:10:42 - Action: checked_in
+2026-11-08 19:10:42 - PC will enter Sleep in 5 seconds.
+2026-11-08 19:16:11 - ========================================
+2026-11-08 19:16:11 - Attendance task started.
+2026-11-08 19:16:11 - Backend is ready.
+2026-11-08 19:16:12 - ERP connection unavailable. Waiting 10 seconds...
+2026-11-08 19:16:22 - ERP connection unavailable. Waiting 10 seconds...
+2026-11-08 19:16:32 - ERP DNS and HTTPS connection established.
+2026-11-08 19:16:32 - Calling attendance API.
+2026-11-08 19:16:32 - ERROR: The remote server returned an error: (400) Bad Request.
+2026-11-08 19:16:32 - PC will remain awake.
+2026-11-08 19:30:11 - ========================================
+2026-11-08 19:30:11 - Attendance task started.
+2026-11-08 19:30:11 - Stopping old Backend process...
+2026-11-08 19:30:12 - Stopping process: python, PID: 16332
+2026-11-08 19:30:12 - ERROR: Cannot stop process "python (16332)" because of the following error: Access is denied
+2026-11-08 19:30:12 - PC will remain awake.
+2026-11-08 19:40:50 - ========================================
+2026-11-08 19:40:50 - Attendance task started.
+2026-11-08 19:40:50 - Stopping old Backend process...
+2026-11-08 19:40:51 - Stopping process: python, PID: 2560
+2026-11-08 19:40:51 - Old Backend stopped successfully.
+2026-11-08 19:40:51 - Starting fresh Backend...
+2026-11-08 19:40:52 - Fresh Backend is ready.
+2026-11-08 19:40:52 - ERP DNS and HTTPS connection established.
+2026-11-08 19:40:52 - Calling attendance API.
+2026-11-08 19:40:59 - Attendance verified successfully.
+2026-11-08 19:40:59 - Action: checked_in
+2026-11-08 19:40:59 - PC will enter Sleep in 5 seconds.
+2026-11-08 19:49:21 - ========================================
+2026-11-08 19:49:21 - Attendance task started.
+2026-11-08 19:49:21 - Stopping old Backend process...
+2026-11-08 19:49:21 - Stopping process: python, PID: 20952
+2026-11-08 19:49:21 - Old Backend stopped successfully.
+2026-11-08 19:49:21 - Starting fresh Backend...
+2026-11-08 19:49:22 - Fresh Backend is ready.
+2026-11-08 19:49:23 - ERP DNS and HTTPS connection established.
+2026-11-08 19:49:23 - Calling attendance API.
+2026-11-08 19:49:28 - Attendance verified successfully.
+2026-11-08 19:49:28 - Action: checked_in
+2026-11-08 19:49:28 - PC will enter Sleep in 5 seconds.
+2026-11-08 19:51:21 - ========================================
+2026-11-08 19:51:21 - Attendance task started.
+2026-11-08 19:51:21 - Stopping old Backend process...
+2026-11-08 19:51:21 - Stopping process: python, PID: 9964
+2026-11-08 19:51:21 - Old Backend stopped successfully.
+2026-11-08 19:51:21 - Starting fresh Backend...
+2026-11-08 19:51:22 - Fresh Backend is ready.
+2026-11-08 19:51:23 - ERP DNS and HTTPS connection established.
+2026-11-08 19:51:23 - Calling attendance API.
+2026-11-08 19:51:28 - Attendance verified successfully.
+2026-11-08 19:51:28 - Action: checked_in
+2026-11-08 19:51:28 - PC will enter Sleep in 5 seconds.
+2026-11-08 21:20:50 - ========================================
+2026-11-08 21:20:51 - Attendance task started.
+2026-11-08 21:20:51 - Stopping old Backend process...
+2026-11-08 21:20:51 - Stopping process: python, PID: 12484
+2026-11-08 21:20:51 - Old Backend stopped successfully.
+2026-11-08 21:20:51 - Starting fresh Backend...
+2026-11-08 21:20:52 - Fresh Backend is ready.
+2026-11-08 21:20:53 - ERP DNS and HTTPS connection established.
+2026-11-08 21:20:53 - Calling attendance API.
+2026-11-08 21:20:58 - Attendance verified successfully.
+2026-11-08 21:20:58 - Action: checked_in
+2026-11-08 21:20:58 - PC will enter Sleep in 5 seconds.
+2026-11-08 21:24:00 - ========================================
+2026-11-08 21:24:00 - Attendance task started.
+2026-11-08 21:24:00 - Stopping old Backend process...
+2026-11-08 21:24:01 - Stopping process: python, PID: 3220
+2026-11-08 21:24:01 - Old Backend stopped successfully.
+2026-11-08 21:24:01 - Starting fresh Backend...
+2026-11-08 21:24:02 - Fresh Backend is ready.
+2026-11-08 21:24:03 - ERP connection unavailable. Waiting 10 seconds...
+2026-11-08 21:24:13 - ERP connection unavailable. Waiting 10 seconds...
+2026-11-08 21:24:23 - ERP DNS and HTTPS connection established.
+2026-11-08 21:24:23 - Calling attendance API.
+2026-11-08 21:24:28 - Attendance verified successfully.
+2026-11-08 21:24:28 - Action: checked_in
+2026-11-08 21:24:28 - PC will enter Sleep in 5 seconds.

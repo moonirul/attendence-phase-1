@@ -1,10 +1,13 @@
-﻿$ErrorActionPreference = "Stop"
+﻿
+$ErrorActionPreference = "Stop"
 
 $LogFile = Join-Path $PSScriptRoot "attendance_run.log"
 
 $ErpHost = "erp.betopiagroup.com"
 $AttendanceApi = "http://127.0.0.1:8000/api/erp/attendance/home/run"
 $OpenApiUrl = "http://127.0.0.1:8000/openapi.json"
+
+$BackendBat = Join-Path $PSScriptRoot "start_backend.local.bat"
 
 function Write-Log {
     param([string]$Message)
@@ -15,13 +18,101 @@ function Write-Log {
     Write-Host $Line
 }
 
+function Test-BackendReady {
+    try {
+        Invoke-RestMethod -Uri $OpenApiUrl -TimeoutSec 2 | Out-Null
+        return $true
+    }
+    catch {
+        return $false
+    }
+}
+
 try {
 
     Write-Log "========================================"
     Write-Log "Attendance task started."
 
     # ----------------------------------------
-    # WAIT FOR BACKEND
+    # CHECK BACKEND STARTUP FILE
+    # ----------------------------------------
+
+    if (-not (Test-Path $BackendBat)) {
+        throw "Backend startup file not found: $BackendBat"
+    }
+
+    # ----------------------------------------
+    # STOP OLD BACKEND
+    # ----------------------------------------
+
+    Write-Log "Stopping old Backend process..."
+
+    $OldConnections = @(
+        Get-NetTCPConnection `
+            -LocalPort 8000 `
+            -State Listen `
+            -ErrorAction SilentlyContinue
+    )
+
+    $OldProcessIds = @(
+        $OldConnections |
+        Select-Object -ExpandProperty OwningProcess -Unique
+    )
+
+    foreach ($ProcessId in $OldProcessIds) {
+
+        if ($ProcessId -ne 0) {
+
+            $Process = Get-Process -Id $ProcessId -ErrorAction SilentlyContinue
+
+            if ($Process) {
+
+                Write-Log "Stopping process: $($Process.ProcessName), PID: $ProcessId"
+
+                Stop-Process -Id $ProcessId -Force -ErrorAction Stop
+            }
+        }
+    }
+
+    # Wait for port to become free
+
+    $PortFree = $false
+
+    for ($i = 0; $i -lt 15; $i++) {
+
+        $Listener = Get-NetTCPConnection `
+            -LocalPort 8000 `
+            -State Listen `
+            -ErrorAction SilentlyContinue
+
+        if (-not $Listener) {
+            $PortFree = $true
+            break
+        }
+
+        Start-Sleep -Seconds 1
+    }
+
+    if (-not $PortFree) {
+        throw "Old Backend did not stop. Port 8000 is still occupied."
+    }
+
+    Write-Log "Old Backend stopped successfully."
+
+    # ----------------------------------------
+    # START FRESH BACKEND
+    # ----------------------------------------
+
+    Write-Log "Starting fresh Backend..."
+
+    Start-Process `
+        -FilePath $env:ComSpec `
+        -ArgumentList "/c `"$BackendBat`"" `
+        -WorkingDirectory $PSScriptRoot `
+        -WindowStyle Hidden
+
+    # ----------------------------------------
+    # WAIT FOR NEW BACKEND
     # MAXIMUM 30 SECONDS
     # ----------------------------------------
 
@@ -29,28 +120,19 @@ try {
 
     for ($i = 0; $i -lt 30; $i++) {
 
-        try {
-
-            Invoke-RestMethod `
-                -Uri $OpenApiUrl `
-                -TimeoutSec 2 | Out-Null
-
+        if (Test-BackendReady) {
             $BackendReady = $true
             break
-
         }
-        catch {
 
-            Start-Sleep -Seconds 1
-
-        }
+        Start-Sleep -Seconds 1
     }
 
     if (-not $BackendReady) {
-        throw "Backend unavailable after 30 seconds."
+        throw "Fresh Backend unavailable after 30 seconds."
     }
 
-    Write-Log "Backend is ready."
+    Write-Log "Fresh Backend is ready."
 
     # ----------------------------------------
     # WAIT FOR ERP CONNECTION
@@ -58,7 +140,6 @@ try {
     # ----------------------------------------
 
     $ConnectionReady = $false
-
     $Deadline = (Get-Date).AddSeconds(180)
 
     while ((Get-Date) -lt $Deadline) {
@@ -79,16 +160,12 @@ try {
                     -WarningAction SilentlyContinue
 
                 if ($HttpsReady) {
-
                     $ConnectionReady = $true
                     break
-
                 }
             }
-
         }
         catch {
-
             # DNS or network unavailable.
         }
 
@@ -98,9 +175,7 @@ try {
     }
 
     if (-not $ConnectionReady) {
-
         throw "ERP connection unavailable after 3 minutes. Check-in was not attempted."
-
     }
 
     Write-Log "ERP DNS and HTTPS connection established."
