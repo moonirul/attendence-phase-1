@@ -1,0 +1,49 @@
+2026-11-08 15:10:40 - ========================================
+2026-11-08 15:10:40 - Attendance task started.
+2026-11-08 15:10:40 - Backend is ready.
+2026-11-08 15:10:42 - ERP DNS and HTTPS connection established.
+2026-11-08 15:10:42 - Calling attendance API.
+2026-11-08 15:10:47 - Attendance verified successfully.
+2026-11-08 15:10:47 - Action: checked_in
+2026-11-08 15:10:47 - PC will enter Sleep in 5 seconds.
+2026-11-08 15:14:01 - ========================================
+2026-11-08 15:14:01 - Attendance task started.
+2026-11-08 15:14:01 - Backend is ready.
+2026-11-08 15:14:02 - ERP DNS and HTTPS connection established.
+2026-11-08 15:14:02 - Calling attendance API.
+2026-11-08 15:14:02 - ERROR: The remote server returned an error: (400) Bad Request.
+2026-11-08 15:14:02 - PC will remain awake.
+2026-11-08 15:22:45 - ========================================
+2026-11-08 15:22:45 - Attendance task started.
+2026-11-08 15:22:45 - Backend is ready.
+2026-11-08 15:22:45 - ERP connection unavailable. Waiting 10 seconds...
+2026-11-08 15:22:55 - ERP connection unavailable. Waiting 10 seconds...
+2026-11-08 15:23:06 - ERP DNS and HTTPS connection established.
+2026-11-08 15:23:06 - Calling attendance API.
+2026-11-08 15:23:06 - ERROR: The remote server returned an error: (400) Bad Request.
+2026-11-08 15:23:06 - PC will remain awake.
+2026-11-08 15:32:13 - ========================================
+2026-11-08 15:32:13 - Attendance task started.
+2026-11-08 15:32:13 - Backend is ready.
+2026-11-08 15:32:13 - ERP connection unavailable. Waiting 10 seconds...
+2026-11-08 15:32:23 - ERP connection unavailable. Waiting 10 seconds...
+2026-11-08 15:32:34 - ERP DNS and HTTPS connection established.
+2026-11-08 15:32:34 - Calling attendance API.
+2026-11-08 15:32:39 - Attendance verified successfully.
+2026-11-08 15:32:39 - Action: checked_in
+2026-11-08 15:32:39 - PC will enter Sleep in 5 seconds.
+2026-11-08 15:40:01 - ========================================
+2026-11-08 15:40:01 - Attendance task started.
+2026-11-08 15:40:01 - Backend is ready.
+2026-11-08 15:40:01 - ERP DNS and HTTPS connection established.
+2026-11-08 15:40:01 - Calling attendance API.
+2026-11-08 15:40:03 - ERROR: Attendance not verified. PC will remain awake.
+2026-11-08 15:40:03 - PC will remain awake.
+2026-11-08 15:42:00 - ========================================
+2026-11-08 15:42:00 - Attendance task started.
+2026-11-08 15:42:00 - Backend is ready.
+2026-11-08 15:42:01 - ERP DNS and HTTPS connection established.
+2026-11-08 15:42:01 - Calling attendance API.
+2026-11-08 15:42:06 - Attendance verified successfully.
+2026-11-08 15:42:06 - Action: checked_in
+2026-11-08 15:42:06 - PC will enter Sleep in 5 seconds.
