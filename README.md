@@ -1,105 +1,82 @@
-# Betopia ERP Attendance Adapter — Phase 1
+# Betopia ERP Attendance Adapter
 
-Phase 1 provides a local FastAPI service, a Next.js control panel, a visible Playwright browser, manual ERP authentication, and read-only DOM inspection.
+## Installation (New Windows PC)
 
-**It does not submit attendance, click punch buttons, store ERP credentials, bypass MFA, or claim that URL changes prove authentication.**
-
-## Requirements
-
-- Python 3.11+
-- Node.js 20+
-- Docker Desktop (for PostgreSQL; database is not yet used in Phase 1)
-- Windows, macOS, or Linux desktop for visible manual browser login
-
-## 1. Backend setup
-
-From the repository root:
-
-```bash
-cd backend
-python -m venv .venv
-```
-
-Windows PowerShell:
+### Step 1: Clone Repository
 
 ```powershell
-.venv\Scripts\Activate.ps1
+git clone https://github.com/moonirul/attendence-phase-1.git
+cd attendence-phase-1
+```
+
+### Step 2: Setup Python Environment
+
+```powershell
+cd backend
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
-python -m playwright install chromium
-uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
+playwright install chromium
 ```
 
-macOS/Linux activation:
+### Step 3: First-Time ERP Login & MFA Setup
 
-```bash
-source .venv/bin/activate
-pip install -r requirements.txt
-python -m playwright install chromium
-uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
+1. Start the backend:
+
+```powershell
+python -m uvicorn app.main:app --host 127.0.0.1 --port 8000
 ```
 
-Keep this terminal running. The browser profile is stored in `backend/.browser-profile/` and is ignored by Git. Do not share it; it may contain authenticated session data.
+2. Open Swagger:
 
-## 2. Frontend setup
+http://127.0.0.1:8000/docs
 
-In another terminal:
+3. Execute `POST /api/erp/session/start`.
+4. A browser window will open.
+5. Log in to Betopia ERP using your own credentials.
+6. Complete MFA verification manually.
+7. Keep the ERP browser session open.
 
-```bash
-cd frontend
-npm install
-npm run dev
+### Step 4: Test First Attendance
+
+1. Confirm that you are authorized to work from home.
+2. Set the first attendance time to **current time + 5 minutes**.
+3. Open a new PowerShell window as Administrator.
+4. Run:
+
+```powershell
+cd attendence-phase-1
+Set-ExecutionPolicy -Scope Process Bypass
+.\scripts\install_tasks.ps1
 ```
 
-Open http://localhost:3000.
+5. Enter your ERP employee name.
+6. Enter the attendance time in `HH:mm:ss` format.
+7. Wait for the scheduled Check-In and verify the result.
 
-## 3. Start PostgreSQL (optional in Phase 1)
+### Step 5: Daily Setup / Change Attendance Time
 
-Copy `.env.example` to `.env`, set a strong unique password, then run:
+From the project root, open PowerShell as Administrator:
 
-```bash
-docker compose up -d postgres
+```powershell
+Set-ExecutionPolicy -Scope Process Bypass
+.\scripts\install_tasks.ps1
 ```
 
-Phase 1 does not yet write application data to PostgreSQL. Database models and migrations arrive in a later phase.
+Enter:
+- ERP employee name
+- Desired daily attendance time (`HH:mm:ss`)
 
-## 4. Manual login and inspection
+The installer updates the scheduled tasks.
 
-1. Click **Open ERP login**.
-2. A visible Chromium window opens at the Betopia ERP login page.
-3. Complete username/password and Microsoft Entra ID MFA manually.
-4. Return to the dashboard and click **Inspect current page**.
-5. Review the returned JSON report. It captures visible button candidates, input labels/attributes, status-like DOM elements, page title/URL and possible session-expiration text.
-6. Save the report locally if needed, but redact employee identifiers and personal data before sharing it.
+### API Documentation
 
-The inspection report is evidence for selector design, not a verified attendance map. Accessible names are approximated from visible text/ARIA attributes; Phase 2 will review actual DOM and establish robust accessible locators.
+http://127.0.0.1:8000/docs
 
-## API
-
-- `GET /health`
-- `POST /api/erp/session/start` — body `{}`; opens visible browser
-- `GET /api/erp/session/status` — URL-based authentication hint only
-- `POST /api/erp/dashboard/inspect` — read-only DOM inspection
-- `POST /api/erp/session/stop`
-
-API docs: http://localhost:8000/docs
-
-## Security notes
-
-- Run the backend bound to `127.0.0.1`; do not expose it publicly.
-- No password or MFA input is collected by this app.
-- Never commit `.browser-profile/`, `.env`, screenshots or raw inspection reports.
-- The browser profile is sensitive. Use a dedicated OS account/device where practical.
-- Only use an ERP account and actions you are authorized to access.
-- The current API is intended for a single-user local development environment, not multi-user production deployment.
-
-## Phase 1 limitations
-
-- Authentication is not yet verified from ERP-specific DOM evidence.
-- Employee identity, attendance schedule, presence, work mode and duplicate records are not detected.
-- No punch-in/punch-out action exists.
-- No scheduler, notifications, audit database, or real ERP integration claim is made.
-- The session uses a persistent local browser profile to preserve manual login state; close the session when finished.
-
-## Next phase
-
-Use a real authorized account to produce a sanitized inspection report. Phase 2 will use that evidence to implement dashboard/session detection and stable selectors. Do not send passwords, MFA codes, cookies, storage-state files, or the browser profile.
+**Important:**
+- Complete ERP login and MFA manually.
+- Keep the PC connected to the internet.
+- Disable the Attendance task on non-WFH days.
+- Verify successful Check-In in Betopia ERP.
+- The PC enters Sleep only after successful attendance verification.
+- Never share your ERP credentials or browser profile.
