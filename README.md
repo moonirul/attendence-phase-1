@@ -1,5 +1,44 @@
 # Betopia ERP Attendance Adapter
 
+## Project Overview
+
+### 1. Project Objective
+- Automate daily Home Office Check-In.
+- Eliminate repetitive manual attendance tasks.
+- Ensure timely and verified attendance.
+
+### 2. Problem Statement
+- Employees need to manually log in to Betopia ERP.
+- Navigate to HRMS → Attendances → Home Attendance.
+- Manually click the Check-In button every working day.
+- Risk of missing or delaying attendance.
+
+### 3. Project Motivation
+- Reduce manual effort and human errors.
+- Improve productivity through automation.
+- Apply browser automation to a real-world ERP system.
+
+### 4. Proposed Solution
+- Automate ERP interaction using Playwright.
+- Maintain an authenticated browser session.
+- Perform scheduled Home Office Check-In.
+- Verify attendance automatically.
+- Put the PC into Sleep mode after successful Check-In.
+
+### 5. Key Technologies
+- Python
+- FastAPI
+- Playwright
+- Windows Task Scheduler
+- PowerShell
+
+### 6. Expected Outcome
+- No daily manual ERP navigation or Check-In.
+- Automated and verified attendance.
+- Reduced repetitive work and unnecessary PC running time.
+
+---
+
 ## Installation (New Windows PC)
 
 ### Step 1: Clone Repository
@@ -47,7 +86,7 @@ http://127.0.0.1:8000/docs
 ```powershell
 cd attendence-phase-1
 Set-ExecutionPolicy -Scope Process Bypass
-.\scripts\install_tasks.ps1
+.\backend\scripts\install_tasks.ps1
 ```
 
 5. Enter your ERP employee name.
@@ -60,7 +99,7 @@ From the project root, open PowerShell as Administrator:
 
 ```powershell
 Set-ExecutionPolicy -Scope Process Bypass
-.\scripts\install_tasks.ps1
+.\backend\scripts\install_tasks.ps1
 ```
 
 Enter:
